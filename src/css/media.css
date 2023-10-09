@@ -1,0 +1,10 @@
+@media screen and (width <= 700px) {
+  body > header {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  header form {
+    gap: 10px;
+  }
+}
