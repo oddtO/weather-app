@@ -24,7 +24,12 @@ module.exports = (env, argv) => {
     devtool: isProduction ? undefined : "inline-source-map",
     devServer: {
       static: "./dist",
-      watchFiles: ["src/**/*", "public/**/*"],
+      watchFiles: [
+        "src/**/*",
+        "public/**/*",
+        "webpack.config.js",
+        "babel.config.js",
+      ],
     },
     plugins: [
       new HtmlWebpackPlugin({ template: "./src/index.html" }),
