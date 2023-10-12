@@ -16,4 +16,6 @@ body > header {
 
 body > main {
   flex: auto;
+  display: flex;
+  flex-direction: column;
 }
