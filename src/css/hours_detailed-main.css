@@ -1,0 +1,52 @@
+.hours-detailed {
+  position: relative;
+  font-size: 18px;
+
+  --header-font-size: 1.3em;
+}
+
+.hours-detailed > h2 {
+  font-size: var(--header-font-size);
+  text-align: center;
+}
+
+.hours-detailed > .table-wrapper {
+  padding-top: 0.5em;
+  height: 100%;
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  top: calc(50% + var(--header-font-size));
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: start;
+
+  /* gap: 40px; */
+}
+
+.table-wrapper td {
+  vertical-align: middle;
+  font-size: 0.75em;
+  padding: 0 30px;
+}
+
+.table-wrapper td * {
+  white-space: nowrap;
+}
+
+.table-wrapper td > img {
+  width: 2.2em;
+}
+
+.table-wrapper > table:first-child td:last-child {
+  padding-right: 30px;
+}
+
+.hours-detailed .temperature {
+  font-size: 1.2em;
+}
+
+.table-wrapper tr:nth-child(2n) {
+  background-color: #d7d7d7;
+}
