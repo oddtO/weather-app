@@ -32,3 +32,9 @@ header input[type="submit"]:hover {
   background-color: #0000dc;
   cursor: pointer;
 }
+
+.weather-mode-select {
+  padding-left: 0;
+  display: flex;
+  gap: 20px;
+}
