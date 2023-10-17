@@ -24,3 +24,7 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
+
+.feels-like-condition {
+  color: #828282;
+}

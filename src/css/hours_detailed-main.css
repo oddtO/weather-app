@@ -1,6 +1,7 @@
 .hours-detailed {
   position: relative;
   font-size: 18px;
+  padding-top: 10px;
 
   --header-font-size: 1.3em;
 }

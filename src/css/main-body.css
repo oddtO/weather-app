@@ -3,6 +3,7 @@ main > * {
 }
 
 main > .today {
+  flex: 1.7;
   display: flex;
   width: 100%;
   height: 100%;
@@ -13,10 +14,23 @@ main > .today > * {
   flex: 1;
 }
 
+.condition-detailed-wrapper > .weather-gif-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.condition-detailed-wrapper img {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+}
+
 main .condition-detailed-wrapper {
   width: 100%;
   height: 100%;
-  background-color: #e6c800;
+
+  /* background-color: #e6c800; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +54,7 @@ main .weather-condition > .temperature {
   transform: translateY(-55%);
 }
 
-main :is(.feels-like-condition, time) {
+main .condition-detailed > :is(.feels-like-condition, time) {
   font-size: 0.5em;
 }
 
@@ -48,4 +62,8 @@ main :is(.weather-condition, .feels-like-condition) {
   display: flex;
   align-items: baseline;
   gap: 4px;
+}
+
+main .chance-of-rain {
+  font-size: 0.6em;
 }
