@@ -23,11 +23,17 @@ export default class weatherApp {
   async getWeatherData(event) {
     event.preventDefault();
     await this.updateWeatherData();
+    await this.renderConditionDetailed();
     console.log(this.response);
-    console.log("gif", await searchGif("sunny"));
   }
-  renderWeatherData() {}
+  async renderWeatherData() {
+    await this.renderConditionDetailed();
+  }
 
+  async renderConditionDetailed() {
+    const gifs = await searchGif(this.response.current.condition.text);
+    this.conditionDetailed.gifElem.src = gifs.data[0].images.original.url;
+  }
   async updateWeatherData() {
     this.response = await this.fetchWeatherData(this.searchInputElem.value);
   }
