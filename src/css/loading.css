@@ -9,4 +9,9 @@
   justify-content: center;
   align-items: center;
   user-select: none;
+  visibility: hidden;
+}
+
+.loading-component.active {
+  visibility: visible;
 }

@@ -40,3 +40,7 @@ header input[type="submit"]:hover {
   display: flex;
   gap: 20px;
 }
+
+.weather-mode-select > label {
+  display: flex;
+}
