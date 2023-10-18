@@ -9,13 +9,15 @@
   }
 }
 
+@media screen and (width <= 850px) {
+  header form {
+    gap: 10px;
+  }
+}
+
 @media screen and (width <= 1100px) {
   .today > * {
     padding: 40px 0;
-  }
-
-  header form {
-    gap: 10px;
   }
 
   main > .today {

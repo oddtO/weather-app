@@ -1,8 +1,8 @@
 import { askWeatherForACity } from "./askWeather";
-import { createApi } from "./api";
+import { createWeatherApi } from "./api";
 import { format } from "date-fns";
 
-const historicalWeatherUrl = createApi("history.json");
+const historicalWeatherUrl = createWeatherApi("history.json");
 
 export function askTodayWeatherStatistics(cityName) {
   historicalWeatherUrl.searchParams.set("dt", format(new Date(), "yyyy-MM-dd"));

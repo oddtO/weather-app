@@ -1,7 +1,7 @@
 import { askWeatherForACity } from "./askWeather";
-import { createApi } from "./api";
+import { createWeatherApi } from "./api";
 
-const curWeatherUrl = createApi("current.json");
+const curWeatherUrl = createWeatherApi("current.json");
 
 export function askCurWeatherForACity(cityName) {
   return askWeatherForACity(curWeatherUrl, cityName);
