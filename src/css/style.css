@@ -28,3 +28,9 @@ input[type="search"]::-webkit-search-results-decoration {
 .feels-like-condition {
   color: #828282;
 }
+
+.temperature {
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-end;
+}

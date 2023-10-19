@@ -1,6 +1,7 @@
 import { askCurWeatherForACity } from "./api/askCurWeatherForACity.js";
 import { askWeatherForecastFreePlan } from "./api/askTodayWeatherStatistics.js";
 import { searchGif } from "./api/giphy.js";
+import { format } from "date-fns";
 
 export default class WeatherApp {
   static CELSIUS_SIGN = "°C";
@@ -33,8 +34,9 @@ export default class WeatherApp {
       conditionName: body.querySelector(".name-condition"),
       chanceOfRain: body.querySelector(".chance-of-rain > .chance"),
       currentTime: body.querySelector(".condition-detailed > time"),
-      hoursTodayTbodies: body.querySelectorAll(".table-wrapper tbody"),
     };
+
+    this.hoursTodayRows = body.querySelectorAll(".table-wrapper tr");
     console.log(this.conditionDetailed);
   }
 
@@ -44,10 +46,12 @@ export default class WeatherApp {
     console.log(this.response);
     console.log(this.responseStats);
     await this.renderConditionDetailed();
+    this.renderHoursToday();
   }
-  async renderWeatherData() {
+  /* async renderWeatherData() {
     await this.renderConditionDetailed();
-  }
+    this.renderHoursToday();
+  } */
 
   async renderConditionDetailed() {
     const hourNow = new Date().getHours();
@@ -95,7 +99,33 @@ export default class WeatherApp {
     this.conditionDetailed.currentTime.textContent =
       this.response.location.localtime;
   }
-  renderHoursToday() {}
+  renderHoursToday() {
+    const hoursToday = this.responseStats.forecast.forecastday[0].hour;
+    console.log(this);
+    for (let i = 0; i < this.hoursTodayRows.length; ++i) {
+      let weatherNumber = null;
+      let temperatureScale = null;
+
+      if (WeatherApp.isCelcius()) {
+        weatherNumber = hoursToday[i].temp_c;
+        temperatureScale = WeatherApp.CELSIUS_SIGN;
+      } else {
+        weatherNumber = hoursToday[i].temp_f;
+        temperatureScale = WeatherApp.FAHRENHEIT_SIGN;
+      }
+      const tr = this.hoursTodayRows[i];
+      console.log(tr);
+      const date = new Date(hoursToday[i].time);
+      tr.innerHTML = `<td>
+				${format(date, "HH:mm")}
+			</td><td>
+				<img src="${"https:" + hoursToday[i].condition.icon}"/>
+			</td><td><span class="temperature"><span class="number">${weatherNumber}</span>
+				<span class="scale-temperature">${temperatureScale}</span>
+
+			</span></td>`;
+    }
+  }
   async updateWeatherData() {
     const response = this.fetchWeatherData(this.searchInputElem.value);
     const responseStats = askWeatherForecastFreePlan(
