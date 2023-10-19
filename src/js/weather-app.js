@@ -13,7 +13,13 @@ export default class WeatherApp {
       "submit",
       this.getWeatherData.bind(this),
     );
+    this.weatherModeSelect = body.querySelector(".weather-mode-select");
 
+    for (const input of this.weatherModeSelect.querySelectorAll("input")) {
+      input.addEventListener("change", () => {
+        this.renderWeatherData();
+      });
+    }
     this.conditionDetailed = {
       gifElem: body.querySelector(".weather-gif-wrapper > img"),
       countryElem: body.querySelector(".country"),
@@ -38,6 +44,7 @@ export default class WeatherApp {
 
     this.hoursTodayRows = body.querySelectorAll(".table-wrapper tr");
     this.nextDaysConditions = body.querySelectorAll(".next-days > .condition");
+
     console.log(this);
   }
 
@@ -46,23 +53,16 @@ export default class WeatherApp {
     await this.updateWeatherData();
     console.log(this.response);
     console.log(this.responseStats);
-    await this.renderConditionDetailed();
+    this.renderWeatherData();
+  }
+  renderWeatherData() {
+    this.renderConditionDetailed();
     this.renderHoursToday();
     this.renderNextDaysConditions();
   }
-  /* async renderWeatherData() {
-    await this.renderConditionDetailed();
-    this.renderHoursToday();
-  } */
 
   async renderConditionDetailed() {
-    const hourNow = new Date().getHours();
-    const gifs = await searchGif(
-      this.response.current.condition.text +
-        " sky" +
-        (hourNow >= 20 || hourNow <= 6 ? " night " : " noon "),
-    );
-    this.conditionDetailed.gifElem.src = gifs.data[0].images.original.url;
+    this.conditionDetailed.gifElem.src = this.gifs.data[0].images.original.url;
     this.conditionDetailed.countryElem.textContent =
       this.response.location.country;
 
@@ -161,10 +161,18 @@ export default class WeatherApp {
     const responseStats = askWeatherForecastFreePlan(
       this.searchInputElem.value,
     );
+
     [this.response, this.responseStats] = await Promise.all([
       response,
       responseStats,
     ]);
+
+    const hourNow = new Date().getHours();
+    this.gifs = await searchGif(
+      this.response.current.condition.text +
+        " sky" +
+        (hourNow >= 20 || hourNow <= 6 ? " night " : " noon "),
+    );
   }
   fetchWeatherData(cityName) {
     return askCurWeatherForACity(cityName);
