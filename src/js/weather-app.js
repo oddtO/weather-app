@@ -1,5 +1,5 @@
 import { askCurWeatherForACity } from "./api/askCurWeatherForACity.js";
-import { askTodayWeatherStatistics } from "./api/askTodayWeatherStatistics.js";
+import { askWeatherForecastFreePlan } from "./api/askTodayWeatherStatistics.js";
 import { searchGif } from "./api/giphy.js";
 
 export default class WeatherApp {
@@ -33,6 +33,7 @@ export default class WeatherApp {
       conditionName: body.querySelector(".name-condition"),
       chanceOfRain: body.querySelector(".chance-of-rain > .chance"),
       currentTime: body.querySelector(".condition-detailed > time"),
+      hoursTodayTbodies: body.querySelectorAll(".table-wrapper tbody"),
     };
     console.log(this.conditionDetailed);
   }
@@ -42,7 +43,6 @@ export default class WeatherApp {
     await this.updateWeatherData();
     console.log(this.response);
     console.log(this.responseStats);
-    console.log(new Date().getHours());
     await this.renderConditionDetailed();
   }
   async renderWeatherData() {
@@ -50,7 +50,12 @@ export default class WeatherApp {
   }
 
   async renderConditionDetailed() {
-    const gifs = await searchGif(this.response.current.condition.text);
+    const hourNow = new Date().getHours();
+    const gifs = await searchGif(
+      this.response.current.condition.text +
+        " sky" +
+        (hourNow >= 20 || hourNow <= 6 ? " night " : " noon "),
+    );
     this.conditionDetailed.gifElem.src = gifs.data[0].images.original.url;
     this.conditionDetailed.countryElem.textContent =
       this.response.location.country;
@@ -90,9 +95,12 @@ export default class WeatherApp {
     this.conditionDetailed.currentTime.textContent =
       this.response.location.localtime;
   }
+  renderHoursToday() {}
   async updateWeatherData() {
     const response = this.fetchWeatherData(this.searchInputElem.value);
-    const responseStats = askTodayWeatherStatistics(this.searchInputElem.value);
+    const responseStats = askWeatherForecastFreePlan(
+      this.searchInputElem.value,
+    );
     [this.response, this.responseStats] = await Promise.all([
       response,
       responseStats,

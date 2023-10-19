@@ -2,9 +2,17 @@ import { askWeatherForACity } from "./askWeather";
 import { createWeatherApi } from "./api";
 import { format } from "date-fns";
 
-const historicalWeatherUrl = createWeatherApi("history.json");
+const forecastWeatherUrl = createWeatherApi("forecast.json");
 
-export function askTodayWeatherStatistics(cityName) {
-  historicalWeatherUrl.searchParams.set("dt", format(new Date(), "yyyy-MM-dd"));
-  return askWeatherForACity(historicalWeatherUrl, cityName);
+export function askWeatherForecast(cityName, days) {
+  forecastWeatherUrl.searchParams.set("days", days);
+  return askWeatherForACity(forecastWeatherUrl, cityName);
+}
+
+export function askTodayWeatherForecast(cityName) {
+  return askWeatherForecast(cityName, 1);
+}
+
+export function askWeatherForecastFreePlan(cityName) {
+  return askWeatherForecast(cityName, 3);
 }
