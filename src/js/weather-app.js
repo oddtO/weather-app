@@ -37,7 +37,8 @@ export default class WeatherApp {
     };
 
     this.hoursTodayRows = body.querySelectorAll(".table-wrapper tr");
-    console.log(this.conditionDetailed);
+    this.nextDaysConditions = body.querySelectorAll(".next-days > .condition");
+    console.log(this);
   }
 
   async getWeatherData(event) {
@@ -47,6 +48,7 @@ export default class WeatherApp {
     console.log(this.responseStats);
     await this.renderConditionDetailed();
     this.renderHoursToday();
+    this.renderNextDaysConditions();
   }
   /* async renderWeatherData() {
     await this.renderConditionDetailed();
@@ -124,6 +126,34 @@ export default class WeatherApp {
 				<span class="scale-temperature">${temperatureScale}</span>
 
 			</span></td>`;
+    }
+  }
+  renderNextDaysConditions() {
+    const forecastdays = this.responseStats.forecast.forecastday;
+    for (let i = 1; i < forecastdays.length; ++i) {
+      let temperatureNumber = null;
+      let temperatureScale = null;
+      if (WeatherApp.isCelcius()) {
+        temperatureNumber = forecastdays[i].day.avgtemp_c;
+        temperatureScale = WeatherApp.CELSIUS_SIGN;
+      } else {
+        temperatureNumber = forecastdays[i].day.avgtemp_f;
+        temperatureScale = WeatherApp.FAHRENHEIT_SIGN;
+      }
+      const nextDate = new Date(forecastdays[i].date);
+      this.nextDaysConditions[i - 1].innerHTML = `
+<time class="day-of-month">${format(nextDate, "do")}</time>	
+<time class="weekday">${format(nextDate, "EEEE")}</time>
+<div class="weather-condition">
+	<img src="${
+    "https:" + forecastdays[i].day.condition.icon
+  }" alt="weather condition name">
+                        <span class="temperature">
+		<span class="number">${temperatureNumber}</span>
+		<span class="scale-temperature">${temperatureScale}</span></span>
+                    </div>
+<strong class="name-condition">${forecastdays[i].day.condition.text}</strong>
+`;
     }
   }
   async updateWeatherData() {

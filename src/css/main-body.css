@@ -21,8 +21,8 @@ main > .today > * {
 }
 
 .weather-gif-wrapper > img {
-  width: 50%;
-  height: 50%;
+  width: 80%;
+  height: 80%;
   object-fit: contain;
 }
 
@@ -32,7 +32,7 @@ main .condition-detailed-wrapper {
 
   /* background-color: #e6c800; */
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 

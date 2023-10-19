@@ -12,6 +12,10 @@ main > .next-days {
   align-items: center;
 }
 
+.next-days .weather-condition > img {
+  margin: 10px 0;
+}
+
 .next-days > .condition {
   display: flex;
   flex-direction: column;
