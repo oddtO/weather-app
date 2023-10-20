@@ -2,6 +2,7 @@ import { askCurWeatherForACity } from "./api/askCurWeatherForACity.js";
 import { askWeatherForecastFreePlan } from "./api/askTodayWeatherStatistics.js";
 import { searchGif } from "./api/giphy.js";
 import { format } from "date-fns";
+import { autocompleteInput } from "./api/search-autocomplete.js";
 
 export default class WeatherApp {
   static CELSIUS_SIGN = "°C";
@@ -9,6 +10,7 @@ export default class WeatherApp {
   constructor(body) {
     this.searchFormElem = body.querySelector("header > form");
     this.searchInputElem = this.searchFormElem.city;
+
     this.searchFormElem.addEventListener(
       "submit",
       this.getWeatherData.bind(this),
@@ -44,10 +46,46 @@ export default class WeatherApp {
 
     this.hoursTodayRows = body.querySelectorAll(".table-wrapper tr");
     this.nextDaysConditions = body.querySelectorAll(".next-days > .condition");
-
+    this.autocompleteList = body.querySelector(".autocomplete");
+    this.searchSubmitBtn = body.querySelector(
+      '.search-wrapper + input[type="submit"]',
+    );
     console.log(this);
+    this.searchInputElem.addEventListener("input", () => {
+      console.log("input");
+      this.getAutocompleteData(this.searchInputElem.value);
+    });
+
+    this.autocompleteList.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (!(target instanceof HTMLLIElement)) return;
+      this.searchInputElem.value = target.dataset.cityName;
+      this.searchSubmitBtn.click();
+      this.autocompleteList.classList.remove("active");
+    });
   }
 
+  async getAutocompleteData(input) {
+    if (input.length < 2) {
+      this.autocompleteList.classList.remove("active");
+      return;
+    }
+
+    this.autocompleteList.classList.add("active");
+    this.autocompletedEntries = await autocompleteInput(input);
+    this.renderAutocompleteData();
+  }
+
+  renderAutocompleteData() {
+    this.autocompleteList.innerHTML = "";
+    for (const cityData of this.autocompletedEntries) {
+      this.autocompleteList.insertAdjacentHTML(
+        "beforeend",
+        `<li data-city-name="${cityData.name}">${cityData.name}</li>`,
+      );
+    }
+  }
   async getWeatherData(event) {
     event.preventDefault();
     await this.updateWeatherData();

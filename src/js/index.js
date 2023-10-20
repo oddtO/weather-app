@@ -12,6 +12,9 @@ import { askCurWeatherForACity } from "./api/askCurWeatherForACity.js";
 import { askTodayWeatherStatistics } from "./api/askTodayWeatherStatistics.js";
 import WeatherApp from "./weather-app.js";
 
+import { autocompleteInput } from "./api/search-autocomplete";
+console.log(await autocompleteInput("Lo*"));
+
 const app = new WeatherApp(document.body);
 
 /* console.log("cur", await askCurWeatherForACity("Cherkasy"));
