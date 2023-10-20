@@ -10,11 +10,14 @@ export default class WeatherApp {
   constructor(body) {
     this.searchFormElem = body.querySelector("header > form");
     this.searchInputElem = this.searchFormElem.city;
+    this.loadingComponent = body.querySelector(".loading-component");
+    this.searchFormElem.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      this.loadingComponent.classList.add("active");
+      await this.getWeatherData();
 
-    this.searchFormElem.addEventListener(
-      "submit",
-      this.getWeatherData.bind(this),
-    );
+      this.loadingComponent.classList.remove("active");
+    });
     this.weatherModeSelect = body.querySelector(".weather-mode-select");
 
     for (const input of this.weatherModeSelect.querySelectorAll("input")) {
@@ -86,8 +89,7 @@ export default class WeatherApp {
       );
     }
   }
-  async getWeatherData(event) {
-    event.preventDefault();
+  async getWeatherData() {
     await this.updateWeatherData();
     console.log(this.response);
     console.log(this.responseStats);
