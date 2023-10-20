@@ -102,7 +102,9 @@ export default class WeatherApp {
   }
 
   renderConditionDetailed() {
-    this.conditionDetailed.gifElem.src = this.gifs.data[0].images.original.url;
+    // this.conditionDetailed.gifElem.src = this.gifs.data[0].images.original.url;
+    this.conditionDetailed.gifElem.src =
+      this.gifs.data[0].images.downsized_still.url;
     clearTimeout(this.timerId);
     this.timerId = setTimeout(this.changeGifs.bind(this), 3000, 0);
     this.conditionDetailed.countryElem.textContent =
@@ -220,8 +222,10 @@ export default class WeatherApp {
   changeGifs(callCount) {
     if (callCount >= this.gifs.data.length) callCount = 0;
 
+    /* this.conditionDetailed.gifElem.src =
+      this.gifs.data[callCount].images.original.url; */
     this.conditionDetailed.gifElem.src =
-      this.gifs.data[callCount].images.original.url;
+      this.gifs.data[callCount].images.downsized_still.url;
     this.timerId = setTimeout(this.changeGifs.bind(this), 3000, ++callCount);
   }
   fetchWeatherData(cityName) {
