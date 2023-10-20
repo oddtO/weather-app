@@ -61,8 +61,10 @@ export default class WeatherApp {
     this.renderNextDaysConditions();
   }
 
-  async renderConditionDetailed() {
+  renderConditionDetailed() {
     this.conditionDetailed.gifElem.src = this.gifs.data[0].images.original.url;
+    clearTimeout(this.timerId);
+    this.timerId = setTimeout(this.changeGifs.bind(this), 3000, 0);
     this.conditionDetailed.countryElem.textContent =
       this.response.location.country;
 
@@ -170,9 +172,17 @@ export default class WeatherApp {
     const hourNow = new Date().getHours();
     this.gifs = await searchGif(
       this.response.current.condition.text +
-        " sky" +
+        " weather " +
         (hourNow >= 20 || hourNow <= 6 ? " night " : " noon "),
     );
+  }
+
+  changeGifs(callCount) {
+    if (callCount >= this.gifs.data.length) callCount = 0;
+
+    this.conditionDetailed.gifElem.src =
+      this.gifs.data[callCount].images.original.url;
+    this.timerId = setTimeout(this.changeGifs.bind(this), 3000, ++callCount);
   }
   fetchWeatherData(cityName) {
     return askCurWeatherForACity(cityName);
