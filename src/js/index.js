@@ -2,6 +2,7 @@ import "../css/reset.css";
 import "../css/style.css";
 import "../css/body.css";
 import "../css/header-body.css";
+import "../css/autocomplete-header.css";
 import "../css/media.css";
 import "../css/main-body.css";
 import "../css/hours_detailed-main.css";

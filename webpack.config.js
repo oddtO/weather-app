@@ -65,7 +65,7 @@ module.exports = (env, argv) => {
     optimization: {
       minimizer: [`...`, new CssMinimizerWebpackPlugin()],
       minimize: isProduction,
-      usedExports: true,
+      // usedExports: true,
     },
   };
 

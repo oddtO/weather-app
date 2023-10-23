@@ -29,7 +29,8 @@ main > .today > * {
 
 main .condition-detailed-wrapper {
   width: 100%;
-  height: 100%;
+
+  /* height: 100%; */
 
   /* background-color: #e6c800; */
   display: flex;
