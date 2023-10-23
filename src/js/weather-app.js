@@ -69,17 +69,18 @@ export default class WeatherApp {
       );
     });
 
-    this.autocompleteList.addEventListener("click", (event) => {
-      const target = event.target;
-
-      if (!(target instanceof HTMLLIElement)) return;
-      this.searchInputElem.value = target.dataset.cityName;
-      this.searchSubmitBtn.click();
-      this.autocompleteList.classList.remove("active");
-    });
+    this.autocompleteList.addEventListener("click", this.submitForm.bind(this));
     this.searchSubmitBtn.click();
   }
 
+  submitForm(event) {
+    const target = event.target;
+
+    if (!(target instanceof HTMLLIElement)) return;
+    this.searchInputElem.value = target.dataset.cityName;
+    this.searchSubmitBtn.click();
+    this.autocompleteList.classList.remove("active");
+  }
   displayError(error) {
     console.log("err", Object.entries(error));
     if (error instanceof UserError) {
