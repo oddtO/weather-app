@@ -67,6 +67,7 @@ export default class WeatherApp {
       this.searchSubmitBtn.click();
       this.autocompleteList.classList.remove("active");
     });
+    this.searchSubmitBtn.click();
   }
 
   async getAutocompleteData(input) {
@@ -201,10 +202,13 @@ export default class WeatherApp {
     }
   }
   async updateWeatherData() {
-    const response = this.fetchWeatherData(this.searchInputElem.value);
-    const responseStats = askWeatherForecastFreePlan(
-      this.searchInputElem.value,
+    await this.updateWeatherDataFromQuery(
+      this.searchInputElem.value || "auto:ip",
     );
+  }
+  async updateWeatherDataFromQuery(query) {
+    const response = this.fetchWeatherData(query);
+    const responseStats = askWeatherForecastFreePlan(query);
 
     [this.response, this.responseStats] = await Promise.all([
       response,
