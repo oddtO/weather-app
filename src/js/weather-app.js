@@ -17,6 +17,7 @@ export default class WeatherApp {
     this.loadingComponent = body.querySelector(".loading-component");
     this.searchFormElem.addEventListener("submit", async (event) => {
       event.preventDefault();
+      this.errorElem.classList.remove("shown-message");
       this.loadingComponent.classList.add("active");
       await safeCall(
         this.getWeatherData.bind(this),
@@ -122,7 +123,6 @@ export default class WeatherApp {
     this.renderConditionDetailed();
     this.renderHoursToday();
     this.renderNextDaysConditions();
-    this.errorElem.classList.remove("shown-message");
   }
 
   renderConditionDetailed() {
