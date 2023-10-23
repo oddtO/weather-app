@@ -60,9 +60,7 @@ export default class WeatherApp {
     this.searchSubmitBtn = body.querySelector(
       '.search-wrapper + input[type="submit"]',
     );
-    console.log(this);
     this.searchInputElem.addEventListener("input", () => {
-      console.log("input");
       safeCall(
         this.getAutocompleteData.bind(this, this.searchInputElem.value),
         this.displayError.bind(this),
@@ -82,7 +80,6 @@ export default class WeatherApp {
     this.autocompleteList.classList.remove("active");
   }
   displayError(error) {
-    console.log("err", Object.entries(error));
     if (error instanceof UserError) {
       error.relatedError.then(({ error }) => {
         this.errorElem.innerHTML = `${error.code}: ${error.message}`;
@@ -116,8 +113,6 @@ export default class WeatherApp {
   }
   async getWeatherData() {
     await this.updateWeatherData();
-    console.log(this.response);
-    console.log(this.responseStats);
     this.renderWeatherData();
   }
   renderWeatherData() {
@@ -138,7 +133,6 @@ export default class WeatherApp {
     this.conditionDetailed.cityElem.textContent = this.response.location.name;
     this.conditionDetailed.iconElem.src =
       "https:" + this.response.current.condition.icon;
-    console.log(WeatherApp.isCelcius());
     if (WeatherApp.isCelcius()) {
       this.conditionDetailed.temperatureAmount.textContent =
         this.response.current.temp_c;
@@ -172,7 +166,6 @@ export default class WeatherApp {
   }
   renderHoursToday() {
     const hoursToday = this.responseStats.forecast.forecastday[0].hour;
-    console.log(this);
     for (let i = 0; i < this.hoursTodayRows.length; ++i) {
       let weatherNumber = null;
       let temperatureScale = null;
@@ -232,13 +225,10 @@ export default class WeatherApp {
   async updateWeatherDataFromQuery(query) {
     const response = this.fetchWeatherData(query);
     const responseStats = askWeatherForecastFreePlan(query);
-    console.log("pre:", response, responseStats);
     [this.response, this.responseStats] = await Promise.all([
       response,
       responseStats,
     ]);
-
-    console.log("post:", this.response, this.responseStats);
 
     const hourNow = new Date().getHours();
     this.gifs = await searchGif(

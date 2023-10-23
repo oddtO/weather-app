@@ -6,7 +6,6 @@ const API_KEY = "SPTXvu03oRCg29rDUFlQrAbkBpwpp9RG";
 const giphySearchApi = createGiphyApi("search");
 
 export async function searchGif(query) {
-  console.log(query);
   giphySearchApi.searchParams.set("q", query);
   const response = await fetch(giphySearchApi, { mode: "cors" });
   return response.json();
