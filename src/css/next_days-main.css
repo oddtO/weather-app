@@ -1,6 +1,6 @@
 main > .next-days {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 40px;

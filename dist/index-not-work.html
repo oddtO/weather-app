@@ -1,9 +1,11 @@
-<!doctype html>
+<!DOCTYPE >
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>Weather app</title>
+        <script defer="defer" src="./index.js"></script>
+        <link href="./main.css" rel="stylesheet">
     </head>
     <body>
         <header>
@@ -27,7 +29,7 @@
                         name="temperature-scale"
                         id="celsius"
                         value="celsius"
-                        checked
+                        checked="checked"
                     >Celsius</label
         >
                 <label for="fahrenheit">
@@ -43,7 +45,7 @@
         <div class="error shown-message"></div>
         <main>
             <div class="loading-component">
-                <img src="./img/Spinner-1s-200px.svg" alt="">
+                <img src="./348e10f757c314582723.svg" alt="">
             </div>
             <div class="today">
                 <section class="condition-detailed-wrapper">
@@ -75,7 +77,6 @@
                                 <span class="scale-temperature">C</span></span
               >
                         </span>
-
                         <strong class="name-condition">Broken Clouds</strong>
                         <div class="chance-of-rain">
                             <span>Chance of rain: </span>
@@ -85,7 +86,6 @@
                         <time datetime="">00.00.0000</time>
                     </section>
                 </section>
-
                 <section class="hours-detailed">
                     <h2>Hours today</h2>
                     <div class="table-wrapper">
@@ -475,7 +475,6 @@
                 <div class="condition">
                     <time class="day-of-month">25th</time>
                     <time class="weekday">Monday</time>
-
                     <div class="weather-condition">
                         <img
                             src="https://cdn.weatherapi.com/weather/64x64/night/116.png"

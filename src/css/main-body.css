@@ -3,7 +3,7 @@ main > * {
 }
 
 main > .today {
-  flex: 1.7;
+  flex: 4;
   display: flex;
   width: 100%;
   height: 100%;

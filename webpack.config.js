@@ -63,9 +63,16 @@ module.exports = (env, argv) => {
       ],
     },
     optimization: {
-      minimizer: [`...`, new CssMinimizerWebpackPlugin()],
+      minimizer: [
+        `...`,
+        new CssMinimizerWebpackPlugin({
+          minify: CssMinimizerWebpackPlugin.cssoMinify,
+          minimizerOptions: { restructure: false },
+        }),
+      ],
+
       minimize: isProduction,
-      // usedExports: true,
+      usedExports: true,
     },
   };
 
