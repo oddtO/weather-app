@@ -34,3 +34,19 @@ input[type="search"]::-webkit-search-results-decoration {
   display: flex;
   justify-content: flex-end;
 }
+
+.error {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.error.shown-message {
+  display: flex;
+  justify-content: center;
+  padding-top: 10%;
+}
+
+.error.shown-message + main {
+  display: none;
+}

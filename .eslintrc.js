@@ -29,6 +29,6 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    "prefer-const": "error",
+    // "prefer-const": "error",
   },
 };

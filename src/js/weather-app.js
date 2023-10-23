@@ -3,19 +3,25 @@ import { askWeatherForecastFreePlan } from "./api/askTodayWeatherStatistics.js";
 import { searchGif } from "./api/giphy.js";
 import { format } from "date-fns";
 import { autocompleteInput } from "./api/search-autocomplete.js";
+import { UserError } from "./api/error.js";
+import safeCall from "./api/safe-call.js";
 
 export default class WeatherApp {
   static CELSIUS_SIGN = "°C";
   static FAHRENHEIT_SIGN = "°F";
+
   constructor(body) {
+    this.errorElem = body.querySelector(".error");
     this.searchFormElem = body.querySelector("header > form");
     this.searchInputElem = this.searchFormElem.city;
     this.loadingComponent = body.querySelector(".loading-component");
     this.searchFormElem.addEventListener("submit", async (event) => {
       event.preventDefault();
       this.loadingComponent.classList.add("active");
-      await this.getWeatherData();
-
+      await safeCall(
+        this.getWeatherData.bind(this),
+        this.displayError.bind(this),
+      );
       this.loadingComponent.classList.remove("active");
     });
     this.weatherModeSelect = body.querySelector(".weather-mode-select");
@@ -56,7 +62,10 @@ export default class WeatherApp {
     console.log(this);
     this.searchInputElem.addEventListener("input", () => {
       console.log("input");
-      this.getAutocompleteData(this.searchInputElem.value);
+      safeCall(
+        this.getAutocompleteData.bind(this, this.searchInputElem.value),
+        this.displayError.bind(this),
+      );
     });
 
     this.autocompleteList.addEventListener("click", (event) => {
@@ -68,6 +77,19 @@ export default class WeatherApp {
       this.autocompleteList.classList.remove("active");
     });
     this.searchSubmitBtn.click();
+  }
+
+  displayError(error) {
+    console.log("err", Object.entries(error));
+    if (error instanceof UserError) {
+      error.relatedError.then(({ error }) => {
+        this.errorElem.innerHTML = `${error.code}: ${error.message}`;
+      });
+    } else {
+      this.errorElem.innerHTML = `${error.name}: ${error.message}`;
+    }
+
+    this.errorElem.classList.add("shown-message");
   }
 
   async getAutocompleteData(input) {
@@ -100,6 +122,7 @@ export default class WeatherApp {
     this.renderConditionDetailed();
     this.renderHoursToday();
     this.renderNextDaysConditions();
+    this.errorElem.classList.remove("shown-message");
   }
 
   renderConditionDetailed() {
@@ -161,7 +184,6 @@ export default class WeatherApp {
         temperatureScale = WeatherApp.FAHRENHEIT_SIGN;
       }
       const tr = this.hoursTodayRows[i];
-      console.log(tr);
       const date = new Date(hoursToday[i].time);
       tr.innerHTML = `<td>
 				${format(date, "HH:mm")}
@@ -209,11 +231,13 @@ export default class WeatherApp {
   async updateWeatherDataFromQuery(query) {
     const response = this.fetchWeatherData(query);
     const responseStats = askWeatherForecastFreePlan(query);
-
+    console.log("pre:", response, responseStats);
     [this.response, this.responseStats] = await Promise.all([
       response,
       responseStats,
     ]);
+
+    console.log("post:", this.response, this.responseStats);
 
     const hourNow = new Date().getHours();
     this.gifs = await searchGif(

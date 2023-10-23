@@ -1,6 +1,5 @@
 import { askWeatherForACity } from "./askWeather";
 import { createWeatherApi } from "./api";
-import { format } from "date-fns";
 
 const forecastWeatherUrl = createWeatherApi("forecast.json");
 
