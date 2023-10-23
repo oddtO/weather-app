@@ -17,12 +17,12 @@ export default class WeatherApp {
     this.loadingComponent = body.querySelector(".loading-component");
     this.searchFormElem.addEventListener("submit", async (event) => {
       event.preventDefault();
-      this.errorElem.classList.remove("shown-message");
       this.loadingComponent.classList.add("active");
       await safeCall(
         this.getWeatherData.bind(this),
         this.displayError.bind(this),
       );
+      this.errorElem.classList.remove("shown-message");
       this.loadingComponent.classList.remove("active");
     });
     this.weatherModeSelect = body.querySelector(".weather-mode-select");
@@ -91,7 +91,7 @@ export default class WeatherApp {
       this.errorElem.innerHTML = `${error.name}: ${error.message}`;
     }
 
-    this.errorElem.classList.add("shown-message");
+    setTimeout(() => this.errorElem.classList.add("shown-message"));
   }
 
   async getAutocompleteData(input) {
