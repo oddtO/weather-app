@@ -20,7 +20,7 @@
   }
 }
 
-@media screen and (width <= 1220px) {
+@media screen and ((width <= 1200px) or (height <= 900px)) {
   .today > * {
     padding: 40px 0;
   }
