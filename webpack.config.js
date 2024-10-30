@@ -66,7 +66,7 @@ module.exports = (env, argv) => {
       minimizer: [
         `...`,
         new CssMinimizerWebpackPlugin({
-          minify: CssMinimizerWebpackPlugin.cssoMinify,
+          minify: CssMinimizerWebpackPlugin.cleanCssMinify,
           minimizerOptions: { restructure: false },
         }),
       ],
