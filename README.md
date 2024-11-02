@@ -4,7 +4,6 @@
 * [See on github pages](https://oddto.github.io/weather-app/)
 
 
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -25,7 +24,7 @@ You will need `Node.js` and `npm` installed globally on your machine.
    ```sh
    npm install
    ```
-3. Run dev server
+3. Run dev server on http://localhost:8080
    ```sh
    npm run startdev
    ```
@@ -34,7 +33,6 @@ You will need `Node.js` and `npm` installed globally on your machine.
    npm run compilerelease
    ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
@@ -50,7 +48,7 @@ You will need `Node.js` and `npm` installed globally on your machine.
 
 
 
-### Features
+## Features
 
 * Get hourly weather forecast for today.
 * Get weather info in future days.
@@ -72,7 +70,6 @@ You will need `Node.js` and `npm` installed globally on your machine.
 
 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
