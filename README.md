@@ -54,7 +54,7 @@ You will need `Node.js` and `npm` installed globally on your machine.
 * Get weather info in future days.
 * Show gifs related to the weather in a city.
 * Includes feels like temperature as well as chance of rain.
-* Search cities worldwide with autocomplete.
+* Autocomplete while searching cities worldwide.
 * Switch between imperial and metric systems.
 * Responsive design.
 
